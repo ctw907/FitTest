@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workflow Fit Check</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <div class="shell">
@@ -27,7 +27,8 @@
           </div>
         </div>
         <div class="insight-chip">
-          Fit likelihood: <span id="fitScoreDisplay">N/A</span>
+          Fit likelihood:
+          <span id="fitScoreDisplay" class="fit-score-large">N/A</span>
         </div>
       </section>
 
@@ -136,19 +137,19 @@
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_lost_docs" value="1" />
+                  <input type="radio" name="q_lost_docs" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_lost_docs" value="2" />
+                  <input type="radio" name="q_lost_docs" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_lost_docs" value="3" />
+                  <input type="radio" name="q_lost_docs" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_lost_docs" value="4" />
+                  <input type="radio" name="q_lost_docs" value="2" />
                   Strongly agree
                 </label>
               </div>
@@ -162,19 +163,19 @@
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_manual_reentry" value="1" />
+                  <input type="radio" name="q_manual_reentry" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_manual_reentry" value="2" />
+                  <input type="radio" name="q_manual_reentry" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_manual_reentry" value="3" />
+                  <input type="radio" name="q_manual_reentry" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_manual_reentry" value="4" />
+                  <input type="radio" name="q_manual_reentry" value="2" />
                   Strongly agree
                 </label>
               </div>
@@ -188,71 +189,71 @@
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_approvals" value="1" />
+                  <input type="radio" name="q_approvals" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_approvals" value="2" />
+                  <input type="radio" name="q_approvals" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_approvals" value="3" />
+                  <input type="radio" name="q_approvals" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_approvals" value="4" />
+                  <input type="radio" name="q_approvals" value="2" />
                   Strongly agree
                 </label>
               </div>
             </div>
 
             <div class="scale-question" data-question-id="job_visibility">
-              <p>We don’t have a live, reliable view of job or project status without asking people first.</p>
+              <p>We don’t have a live, reliable view of important information and it causes delays and other issues.</p>
               <div class="likert-group">
                 <label class="likert-option">
                   <input type="radio" name="q_job_visibility" value="0" />
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_job_visibility" value="1" />
+                  <input type="radio" name="q_job_visibility" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_job_visibility" value="2" />
+                  <input type="radio" name="q_job_visibility" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_job_visibility" value="3" />
+                  <input type="radio" name="q_job_visibility" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_job_visibility" value="4" />
+                  <input type="radio" name="q_job_visibility" value="2" />
                   Strongly agree
                 </label>
               </div>
             </div>
 
             <div class="scale-question" data-question-id="handoffs">
-              <p>Hand-offs between estimating, project management, field, and accounting are messy or inconsistent.</p>
+              <p>Hand-offs between two different processes (estimating, project management, and accounting) are messy or inconsistent.</p>
               <div class="likert-group">
                 <label class="likert-option">
                   <input type="radio" name="q_handoffs" value="0" />
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_handoffs" value="1" />
+                  <input type="radio" name="q_handoffs" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_handoffs" value="2" />
+                  <input type="radio" name="q_handoffs" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_handoffs" value="3" />
+                  <input type="radio" name="q_handoffs" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_handoffs" value="4" />
+                  <input type="radio" name="q_handoffs" value="2" />
                   Strongly agree
                 </label>
               </div>
@@ -266,19 +267,19 @@
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_firefighting" value="1" />
+                  <input type="radio" name="q_firefighting" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_firefighting" value="2" />
+                  <input type="radio" name="q_firefighting" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_firefighting" value="3" />
+                  <input type="radio" name="q_firefighting" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_firefighting" value="4" />
+                  <input type="radio" name="q_firefighting" value="2" />
                   Strongly agree
                 </label>
               </div>
@@ -292,19 +293,19 @@
                   Strongly disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_data_trust" value="1" />
+                  <input type="radio" name="q_data_trust" value="0.5" />
                   Disagree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_data_trust" value="2" />
+                  <input type="radio" name="q_data_trust" value="1" />
                   Neutral
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_data_trust" value="3" />
+                  <input type="radio" name="q_data_trust" value="1.5" />
                   Agree
                 </label>
                 <label class="likert-option">
-                  <input type="radio" name="q_data_trust" value="4" />
+                  <input type="radio" name="q_data_trust" value="2" />
                   Strongly agree
                 </label>
               </div>
@@ -349,7 +350,6 @@
               <button type="button" class="btn ghost" id="back4">
                 Back
               </button>
-              <!-- You can wire this up to a booking link or close action -->
               <button type="button" class="btn primary" id="finishBtn">
                 Done
               </button>
@@ -362,6 +362,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=2"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
