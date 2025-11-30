@@ -171,11 +171,10 @@ function calculateSizePercent(size) {
 
 // Combined fit for later stages.
 //
-// New spec:
-//   - use same "S - 10, capped at 99" base as initial calculation
-//   - answers are 0, 0.5, 1, 1.5, 2
-//   - rawFit    = avgScale * baseSize
-//   - fitPercent = min(100, round(rawFit))
+// - baseSize = same "S - 10, capped at 99" as initial
+// - answers are 0, 0.5, 1, 1.5, 2
+// - rawFit    = avgScale * baseSize
+// - fitPercent = min(100, round(rawFit))
 function calculateCombinedFit(companySize, scaleArray) {
   if (
     !Number.isFinite(companySize) ||
@@ -186,7 +185,6 @@ function calculateCombinedFit(companySize, scaleArray) {
     return { raw: null, percent: null };
   }
 
-  // baseSize matches the initial sizePercent logic (S - 10 with caps)
   const baseSize = calculateSizePercent(companySize);
 
   if (baseSize <= 0) {
@@ -221,6 +219,12 @@ function updateScaleAnswersFromDOM() {
 
 // ---- Payload / HTTP ----
 
+function getScaleValue(key) {
+  return Object.prototype.hasOwnProperty.call(scaleAnswers, key)
+    ? scaleAnswers[key]
+    : null;
+}
+
 function buildPayload(stepForPayload) {
   const sizeValue = teamSize.value.trim();
   const parsedSize = parseInt(sizeValue, 10);
@@ -237,15 +241,27 @@ function buildPayload(stepForPayload) {
 
   return {
     step: stepForPayload,
+
     fullName: fullName.value.trim(),
     email: email.value.trim(),
     company: company.value.trim(),
     role: role.value.trim(),
+
     companySize: companySize,
     primaryWork: primaryWork.value.trim(),
     tools: tools.value.trim(),
+
     sizePercent: sizePercent,
-    scaleAnswers: { ...scaleAnswers },
+
+    // individual scale fields (no nested object)
+    scale_lost_docs: getScaleValue("lost_docs"),
+    scale_manual_reentry: getScaleValue("manual_reentry"),
+    scale_approvals: getScaleValue("approvals"),
+    scale_job_visibility: getScaleValue("job_visibility"),
+    scale_handoffs: getScaleValue("handoffs"),
+    scale_firefighting: getScaleValue("firefighting"),
+    scale_data_trust: getScaleValue("data_trust"),
+
     scaleAverage: scaleAverage,
     fitPercent: latestFitPercent,
     fitRaw: latestFitRaw,
