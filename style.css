@@ -91,7 +91,8 @@ h1 {
 }
 
 .progress-wrapper {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .step-label {
@@ -116,20 +117,22 @@ h1 {
 }
 
 .insight-chip {
-  font-size: 0.85rem;
-  padding: 6px 10px;
+  font-size: 0.8rem;
+  padding: 4px 8px;
   border-radius: 999px;
   background: #eff6ff;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  white-space: nowrap;
 }
 
 .fit-score-large {
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 3.2rem;    /* ~2x previous size */
+  font-weight: 800;
+  line-height: 1;
 }
 
 /* Layout */
@@ -332,8 +335,8 @@ textarea {
 }
 
 .result-score {
-  font-size: 2.4rem;
-  font-weight: 700;
+  font-size: 3.2rem;   /* bump up result page score too */
+  font-weight: 800;
 }
 
 .result-caption {
