@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow Fit Check</title>
+  <link rel="stylesheet" href="style.css?v=2" />
+</head>
+<body>
+  <div class="shell">
+    <div class="app-card">
+      <header class="app-header">
+        <div class="logo-mark">CTW</div>
+        <div>
+          <h1>Workflow Fit Check</h1>
+          <p class="subtitle">
+            Answer a few questions and we’ll estimate how strong of a fit your operation is for high-impact workflow automation.
+          </p>
+        </div>
+      </header>
+
+      <section class="meta-bar">
+        <div class="progress-wrapper">
+          <div id="stepLabel" class="step-label">Step 1 of 4 · Basic info</div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill"></div>
+          </div>
+        </div>
+        <div class="insight-chip">
+          Fit likelihood: <span id="fitScoreDisplay">N/A</span>
+        </div>
+      </section>
+
+      <main class="form-column">
+        <form id="fitForm" novalidate>
+          <!-- STEP 1: BASIC INFO (NON-CONTRIBUTING) -->
+          <div class="step active" data-step="1">
+            <h2>Basic info</h2>
+
+            <label for="fullName">Full name *</label>
+            <input
+              type="text"
+              id="fullName"
+              autocomplete="name"
+              placeholder="Your name"
+            />
+
+            <label for="email">Email *</label>
+            <input
+              type="email"
+              id="email"
+              autocomplete="email"
+              placeholder="you@company.com"
+            />
+
+            <label for="company">Company</label>
+            <input
+              type="text"
+              id="company"
+              placeholder="Company name"
+            />
+
+            <label for="role">Your role</label>
+            <input
+              type="text"
+              id="role"
+              placeholder="e.g. Operations Manager"
+            />
+
+            <div class="nav-buttons">
+              <button type="button" class="btn primary" id="next1">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: COMPANY SIZE (FIRST CONTRIBUTING PAGE, % = N/A HERE) -->
+          <div class="step" data-step="2">
+            <h2>Your company</h2>
+
+            <label for="teamSize">Rough company size *</label>
+            <input
+              type="number"
+              id="teamSize"
+              placeholder="Number of people in the company"
+              min="1"
+              step="1"
+            />
+
+            <label for="primaryWork">
+              What type of work does your company primarily do?
+            </label>
+            <input
+              type="text"
+              id="primaryWork"
+              placeholder="e.g. Commercial HVAC, residential GC, civil, etc."
+            />
+
+            <label for="tools">
+              Key tools and systems you use today
+            </label>
+            <textarea
+              id="tools"
+              rows="2"
+              placeholder="e.g. Excel, email, text, Teams, Procore, QuickBooks"
+            ></textarea>
+
+            <p class="helper-text">
+              We’ll start calculating a fit score after this step. For this page,
+              the score remains <strong>N/A</strong> by design.
+            </p>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn ghost" id="back2">
+                Back
+              </button>
+              <button type="button" class="btn primary" id="next2">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: SCALE QUESTIONS (CONTRIBUTING) -->
+          <div class="step" data-step="3">
+            <h2>How your operation feels day to day</h2>
+            <p class="subtitle">
+              For each statement, choose how strongly you agree. Agreement
+              usually means automation will create more leverage for you.
+            </p>
+
+            <div class="scale-question" data-question-id="lost_docs">
+              <p>My team is constantly chasing lost documentation, information, or materials.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_lost_docs" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_lost_docs" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_lost_docs" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_lost_docs" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_lost_docs" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="manual_reentry">
+              <p>A lot of our critical data is re-typed or re-entered by hand in multiple places.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_manual_reentry" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_manual_reentry" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_manual_reentry" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_manual_reentry" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_manual_reentry" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="approvals">
+              <p>Approvals (POs, change orders, timecards, etc.) are slow or unclear, causing delays.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_approvals" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_approvals" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_approvals" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_approvals" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_approvals" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="job_visibility">
+              <p>We don’t have a live, reliable view of job or project status without asking people first.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_job_visibility" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_job_visibility" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_job_visibility" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_job_visibility" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_job_visibility" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="handoffs">
+              <p>Hand-offs between estimating, project management, field, and accounting are messy or inconsistent.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_handoffs" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_handoffs" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_handoffs" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_handoffs" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_handoffs" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="firefighting">
+              <p>Leaders spend more time firefighting and chasing updates than improving the system.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_firefighting" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_firefighting" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_firefighting" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_firefighting" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_firefighting" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="scale-question" data-question-id="data_trust">
+              <p>We don’t fully trust the data in our current reports or dashboards when making decisions.</p>
+              <div class="likert-group">
+                <label class="likert-option">
+                  <input type="radio" name="q_data_trust" value="0" />
+                  Strongly disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_data_trust" value="1" />
+                  Disagree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_data_trust" value="2" />
+                  Neutral
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_data_trust" value="3" />
+                  Agree
+                </label>
+                <label class="likert-option">
+                  <input type="radio" name="q_data_trust" value="4" />
+                  Strongly agree
+                </label>
+              </div>
+            </div>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn ghost" id="back3">
+                Back
+              </button>
+              <button type="button" class="btn primary" id="next3">
+                See my fit score
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 4: RESULT SUMMARY (NO NEW CONTRIBUTING VALUES) -->
+          <div class="step" data-step="4">
+            <h2>Your fit score</h2>
+            <p class="subtitle">
+              Based on your company size and how your operation currently feels,
+              here’s our rough, quantitative read.
+            </p>
+
+            <div class="result-card">
+              <div class="result-score" id="resultFitScore">N/A</div>
+              <p class="result-caption">
+                Higher scores mean more leverage from automation and custom workflows.
+              </p>
+              <ul class="result-notes">
+                <li><strong>0–30%</strong>: Likely small, targeted wins.</li>
+                <li><strong>31–70%</strong>: Solid opportunities for measurable ROI.</li>
+                <li><strong>71–100%</strong>: Strong candidate for deep workflow redesign.</li>
+              </ul>
+            </div>
+
+            <p class="helper-text">
+              This score is directional only, based purely on the questions above. In a real engagement,
+              we’d dig into how decisions are made and how information flows across your projects.
+            </p>
+
+            <div class="nav-buttons">
+              <button type="button" class="btn ghost" id="back4">
+                Back
+              </button>
+              <!-- You can wire this up to a booking link or close action -->
+              <button type="button" class="btn primary" id="finishBtn">
+                Done
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div id="formMessage" class="form-message" aria-live="polite"></div>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>
