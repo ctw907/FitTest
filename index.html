@@ -1,10 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workflow Fit Check</title>
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
   <div class="shell">
@@ -14,7 +14,8 @@
         <div>
           <h1>Workflow Fit Check</h1>
           <p class="subtitle">
-            Answer a few questions and we’ll estimate how strong of a fit your operation is for high-impact workflow automation.
+            A quick, numbers-based test to see how strong of a match your company is
+            for custom workflow automation.
           </p>
         </div>
       </header>
@@ -27,8 +28,8 @@
           </div>
         </div>
         <div class="insight-chip">
-          Fit likelihood:
-          <span id="fitScoreDisplay" class="fit-score-large">N/A</span>
+          <div class="fit-label">Fit likelihood</div>
+          <div id="fitScoreDisplay" class="fit-score-large">N/A</div>
         </div>
       </section>
 
@@ -37,6 +38,12 @@
           <!-- STEP 1: BASIC INFO (NON-CONTRIBUTING) -->
           <div class="step active" data-step="1">
             <h2>Basic info</h2>
+            <p class="page-intro">
+              This takes about 2–3 minutes. At the end you’ll see a
+              percentage score showing how strong of a fit you are for
+              high-impact automation, based on your company size and
+              how your operation runs today.
+            </p>
 
             <label for="fullName">Full name *</label>
             <input
@@ -362,6 +369,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=3"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
