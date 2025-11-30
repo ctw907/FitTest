@@ -1,5 +1,4 @@
 // Configure your HTTP endpoint here.
-// Replace this URL with your real HTTP trigger URL if needed.
 const HTTP_ENDPOINT =
   "https://defaultff6ba2824f544b34b3ee2dfa83ff71.b2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e37e49114c9f45ba9212561f8d20f5cc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=hHlIPWojRFAbFF90MEL4_SJzwPkKRwTzm7VCPEQ8qFE";
 
@@ -31,7 +30,6 @@ document.getElementById("back3").addEventListener("click", () => goToStep(2));
 document.getElementById("next3").addEventListener("click", onNext3);
 document.getElementById("back4").addEventListener("click", () => goToStep(3));
 document.getElementById("finishBtn").addEventListener("click", () => {
-  // Nothing special here; you can hook this up to calendaring, etc.
   formMessage.className = "form-message success";
   formMessage.textContent =
     "Thanks for running the fit check. Your responses have been recorded.";
@@ -42,16 +40,17 @@ let currentStep = 1;
 const totalSteps = steps.length;
 let maxCompletedStep = 0;
 
-// Company-size-only percentage
+// Company-size-only percentage (0–99) from the piecewise rule
 let sizePercent = null;
 
-// Latest combined fit percent (company size + scale average)
+// Combined fit: raw (uncapped) and capped percent (0–100)
+let latestFitRaw = null;
 let latestFitPercent = null;
 
-// Per-question scale answers, mapping questionId -> 0..4
+// Per-question scale answers, mapping questionId -> 0, 0.5, 1, 1.5, 2
 const scaleAnswers = {};
 
-// Fit percent after completing each contributing step
+// Store display fit after each contributing step (for progressive display)
 const fitAfterStep = {}; // e.g. fitAfterStep[2] = sizePercent; fitAfterStep[3] = latestFitPercent;
 
 // Step map for labels
@@ -82,12 +81,11 @@ function goToStep(step) {
 function updateFitChipForCurrentStep() {
   let display = "N/A";
 
-  // First two steps: no score shown (per spec).
+  // Step 1 & 2: no score shown
   if (currentStep === 1 || currentStep === 2) {
     display = "N/A";
   } else {
-    // For later steps, show the fit based on all contributing
-    // values up to, but not including, the current page.
+    // Show score based on all contributing values up to the previous step
     const prevStep = currentStep - 1;
     const prevFit = fitAfterStep[prevStep];
 
@@ -160,34 +158,45 @@ function validateStep3() {
 
 // ---- Calculation helpers ----
 
-// Company-size-only %:
+// Company-size-only % (first contributing value)
+//
 // Company size < 10      -> 0
 // 10 <= size <= 109      -> size - 10
 // size > 109             -> 99
 function calculateSizePercent(size) {
   if (!Number.isFinite(size) || size < 10) return 0;
   if (size <= 109) return size - 10;
-  // Assumption: anything above 109 is treated as maxed out at 99%.
   return 99;
 }
 
-// Overall fit % based on company-size % and all scale answers.
-// Interpretation: normalize both to [0,1], then multiply so that
-// both company scale and operational pain have to be high
-// to reach high fit. Hard-capped at 100.
-function calculateCombinedFitPercent(sizePct, scaleArray) {
-  if (!Array.isArray(scaleArray) || scaleArray.length === 0) {
-    return sizePct != null ? sizePct : null;
+// Combined fit for later stages.
+//
+// spec: "we just take the average, multiply it by the company size.
+// cap the result at 100% but store the value of the real value."
+//
+// answers are 0, 0.5, 1, 1.5, 2
+// rawScore = avgScale * companySize
+// percent = min(100, round(rawScore))
+function calculateCombinedFit(companySize, scaleArray) {
+  if (
+    !Number.isFinite(companySize) ||
+    companySize <= 0 ||
+    !Array.isArray(scaleArray) ||
+    scaleArray.length === 0
+  ) {
+    return { raw: null, percent: null };
   }
-  const avg =
-    scaleArray.reduce((sum, v) => sum + v, 0) / scaleArray.length;
 
-  const sizeFactor = Math.max(0, Math.min(1, sizePct / 100));
-  const avgNorm = Math.max(0, Math.min(1, avg / 4));
+  const sum = scaleArray.reduce((acc, v) => acc + v, 0);
+  const avgScale = sum / scaleArray.length;
 
-  let fit = Math.round(100 * sizeFactor * avgNorm);
-  if (fit > 100) fit = 100;
-  return fit;
+  const raw = avgScale * companySize;
+  let percent = Math.round(raw);
+
+  if (percent > 100) percent = 100;
+  if (percent < 0) percent = 0;
+
+  return { raw, percent };
 }
 
 function updateScaleAnswersFromDOM() {
@@ -199,7 +208,7 @@ function updateScaleAnswersFromDOM() {
       `input[name="${name}"]:checked`
     );
     if (checked) {
-      scaleAnswers[qid] = parseInt(checked.value, 10);
+      scaleAnswers[qid] = parseFloat(checked.value);
     }
   });
 }
@@ -233,6 +242,7 @@ function buildPayload(stepForPayload) {
     scaleAnswers: { ...scaleAnswers },
     scaleAverage: scaleAverage,
     fitPercent: latestFitPercent,
+    fitRaw: latestFitRaw,
   };
 }
 
@@ -248,10 +258,9 @@ async function sendPageUpdate(method, stepForPayload) {
       },
       body: JSON.stringify(payload),
     });
-    // No UI change on success; you can log or extend if desired.
   } catch (err) {
     console.error(`${method} failed:`, err);
-    // Soft failure: do not block navigation.
+    // Soft failure, do not block navigation
   }
 }
 
@@ -271,9 +280,10 @@ async function onNext2() {
   const parsedSize = parseInt(teamSize.value.trim(), 10);
   sizePercent = calculateSizePercent(parsedSize);
 
-  // After completing step 2, the single contributor is company size.
+  // After completing step 2, contributor is company size only.
   fitAfterStep[2] = sizePercent;
-  latestFitPercent = sizePercent;
+  latestFitRaw = null;
+  latestFitPercent = null;
 
   maxCompletedStep = Math.max(maxCompletedStep, 2);
   await sendPageUpdate("PUT", 2);
@@ -289,10 +299,15 @@ async function onNext3() {
     (v) => typeof v === "number"
   );
 
-  latestFitPercent = calculateCombinedFitPercent(
-    sizePercent || 0,
-    scaleArray
-  );
+  const sizeValue = teamSize.value.trim();
+  const parsedSize = parseInt(sizeValue, 10);
+  const companySize =
+    sizeValue === "" || Number.isNaN(parsedSize) ? 0 : parsedSize;
+
+  const combined = calculateCombinedFit(companySize, scaleArray);
+  latestFitRaw = combined.raw;
+  latestFitPercent = combined.percent;
+
   fitAfterStep[3] = latestFitPercent;
 
   // Set result text for step 4.
