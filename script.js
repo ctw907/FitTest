@@ -51,7 +51,7 @@ let latestFitPercent = null;
 const scaleAnswers = {};
 
 // Store display fit after each contributing step (for progressive display)
-const fitAfterStep = {}; // e.g. fitAfterStep[2] = sizePercent; fitAfterStep[3] = latestFitPercent;
+const fitAfterStep = {};
 
 // Step map for labels
 const stepLabels = {
@@ -171,12 +171,11 @@ function calculateSizePercent(size) {
 
 // Combined fit for later stages.
 //
-// spec: "we just take the average, multiply it by the company size.
-// cap the result at 100% but store the value of the real value."
-//
-// answers are 0, 0.5, 1, 1.5, 2
-// rawScore = avgScale * companySize
-// percent = min(100, round(rawScore))
+// New spec:
+//   - use same "S - 10, capped at 99" base as initial calculation
+//   - answers are 0, 0.5, 1, 1.5, 2
+//   - rawFit    = avgScale * baseSize
+//   - fitPercent = min(100, round(rawFit))
 function calculateCombinedFit(companySize, scaleArray) {
   if (
     !Number.isFinite(companySize) ||
@@ -187,10 +186,17 @@ function calculateCombinedFit(companySize, scaleArray) {
     return { raw: null, percent: null };
   }
 
+  // baseSize matches the initial sizePercent logic (S - 10 with caps)
+  const baseSize = calculateSizePercent(companySize);
+
+  if (baseSize <= 0) {
+    return { raw: 0, percent: 0 };
+  }
+
   const sum = scaleArray.reduce((acc, v) => acc + v, 0);
   const avgScale = sum / scaleArray.length;
 
-  const raw = avgScale * companySize;
+  const raw = avgScale * baseSize;
   let percent = Math.round(raw);
 
   if (percent > 100) percent = 100;
