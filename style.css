@@ -116,12 +116,20 @@ h1 {
 }
 
 .insight-chip {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   padding: 6px 10px;
   border-radius: 999px;
   background: #eff6ff;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fit-score-large {
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 /* Layout */
@@ -361,6 +369,7 @@ textarea {
   .insight-chip {
     align-self: stretch;
     text-align: center;
+    justify-content: center;
   }
 }
 
