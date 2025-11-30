@@ -1,5 +1,8 @@
-// Configure your HTTP endpoint here.
-const HTTP_ENDPOINT =
+// Configure your HTTP endpoints here.
+const POST_ENDPOINT =
+  "https://defaultff6ba2824f544b34b3ee2dfa83ff71.b2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/cb903600181f4c84828a244e8f77b801/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5uXW4HT3q3h26o0NL9zB75SWSCThu4xcjm0R4kG5BwE";
+
+const PUT_ENDPOINT =
   "https://defaultff6ba2824f544b34b3ee2dfa83ff71.b2.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e37e49114c9f45ba9212561f8d20f5cc/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=hHlIPWojRFAbFF90MEL4_SJzwPkKRwTzm7VCPEQ8qFE";
 
 // Form & steps
@@ -269,11 +272,13 @@ function buildPayload(stepForPayload) {
 }
 
 async function sendPageUpdate(method, stepForPayload) {
-  if (!HTTP_ENDPOINT) return;
+  const endpoint = method === "POST" ? POST_ENDPOINT : PUT_ENDPOINT;
+  if (!endpoint) return;
+
   const payload = buildPayload(stepForPayload);
 
   try {
-    await fetch(HTTP_ENDPOINT, {
+    await fetch(endpoint, {
       method,
       headers: {
         "Content-Type": "application/json",
