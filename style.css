@@ -77,7 +77,7 @@ h1 {
 .subtitle {
   margin: 4px 0 0;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: #4b5563; /* darker for better readability */
 }
 
 /* Meta bar */
@@ -117,20 +117,27 @@ h1 {
 }
 
 .insight-chip {
-  font-size: 0.8rem;
   padding: 4px 8px;
   border-radius: 999px;
   background: #eff6ff;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
   display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
   white-space: nowrap;
 }
 
+.fit-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .fit-score-large {
-  font-size: 3.2rem;    /* ~2x previous size */
+  font-size: 3.2rem;
   font-weight: 800;
   line-height: 1;
 }
@@ -157,6 +164,12 @@ form {
 h2 {
   margin: 0 0 10px;
   font-size: 1.05rem;
+}
+
+.page-intro {
+  margin: 4px 0 12px;
+  font-size: 0.92rem;
+  color: #374151;
 }
 
 label {
@@ -335,14 +348,14 @@ textarea {
 }
 
 .result-score {
-  font-size: 3.2rem;   /* bump up result page score too */
+  font-size: 3.2rem;
   font-weight: 800;
 }
 
 .result-caption {
   margin: 6px 0 10px;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: #4b5563;
 }
 
 .result-notes {
@@ -371,8 +384,8 @@ textarea {
 
   .insight-chip {
     align-self: stretch;
-    text-align: center;
-    justify-content: center;
+    text-align: right;
+    align-items: flex-end;
   }
 }
 
