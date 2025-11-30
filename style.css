@@ -1,0 +1,389 @@
+:root {
+  --bg: #f3f4f6;
+  --card-bg: #ffffff;
+  --primary: #2563eb;
+  --primary-soft: rgba(37, 99, 235, 0.08);
+  --primary-strong: #1d4ed8;
+  --border-subtle: #e5e7eb;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --danger: #b91c1c;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.12);
+  --transition-fast: 150ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top left, #e0f2fe, #f9fafb 55%);
+  color: var(--text-main);
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.app-card {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  padding: 24px 28px 28px;
+}
+
+/* Header */
+
+.app-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0f172a, #1f2937);
+  color: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Meta bar */
+
+.meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.progress-wrapper {
+  flex: 1;
+}
+
+.step-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), #0ea5e9);
+  transition: width 0.25s ease;
+}
+
+.insight-chip {
+  font-size: 0.8rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* Layout */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+}
+
+.form-column {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* Form */
+
+form {
+  margin: 0;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+  color: #374151;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px 11px;
+  border-radius: 9px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast),
+    box-shadow var(--transition-fast), background-color var(--transition-fast);
+  background-color: #f9fafb;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.18);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Helper text */
+
+.helper-text {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Buttons */
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn {
+  border-radius: 999px;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+    transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn.primary {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
+}
+
+.btn.primary:hover {
+  background: var(--primary-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(37, 99, 235, 0.35);
+}
+
+.btn.ghost {
+  background: #f9fafb;
+  color: #111827;
+  border: 1px solid #d1d5db;
+  box-shadow: none;
+}
+
+.btn.ghost:hover {
+  background: #ffffff;
+}
+
+/* Steps */
+
+.step {
+  display: none;
+  animation: fadeIn 200ms ease-out;
+}
+
+.step.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Messages */
+
+.form-message {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  min-height: 18px;
+}
+
+.form-message.error {
+  color: var(--danger);
+}
+
+.form-message.success {
+  color: #166534;
+}
+
+/* Likert / scale questions */
+
+.scale-question {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: #f9fafb;
+}
+
+.scale-question p {
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+}
+
+.likert-group {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.likert-option {
+  font-size: 0.78rem;
+  background: #ffffff;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.likert-option input {
+  margin: 0;
+}
+
+/* Result card */
+
+.result-card {
+  margin-top: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  background: var(--primary-soft);
+}
+
+.result-score {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.result-caption {
+  margin: 6px 0 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.result-notes {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-column {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .insight-chip {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding: 16px;
+  }
+
+  .app-card {
+    padding: 18px 16px 20px;
+    border-radius: 18px;
+  }
+
+  .app-header {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  .likert-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
